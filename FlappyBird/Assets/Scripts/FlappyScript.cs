@@ -53,7 +53,7 @@ public class FlappyScript : MonoBehaviour {
             if (restartButtonGameCollider == Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(contactPoint)))
             {
                 GameStateManager.GameState = GameState.Intro;
-                Application.LoadLevel(Application.loadedLevelName);
+                //Application.LoadLevel(Application.loadedLevelName);
             }
         }
 	}
