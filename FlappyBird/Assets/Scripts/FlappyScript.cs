@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class FlappyScript : MonoBehaviour {
 
     public GameObject IntroGUI, DeathGUI;
+    public GameObject bird;
     public Collider2D restartButtonGameCollider;
 
     public float XSpeed = 1;
     public float VelocityPreJump = 3;
 
-    // Use this for initialization
-    void Start ()
-    {
-	
-	}
-	
-	// Update is called once per frame
 	void Update ()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -53,7 +48,7 @@ public class FlappyScript : MonoBehaviour {
             if (restartButtonGameCollider == Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(contactPoint)))
             {
                 GameStateManager.GameState = GameState.Intro;
-                //Application.LoadLevel(Application.loadedLevelName);
+                SceneManager.LoadScene("main", LoadSceneMode.Single);
             }
         }
 	}
@@ -93,5 +88,23 @@ public class FlappyScript : MonoBehaviour {
     private void FixFlappyRotation()
     {
 
+    }
+    
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (GameStateManager.GameState == GameState.Playing)
+        {
+            if (col.gameObject.tag == "ground")
+            {
+                FlappyDies();
+            }
+        }
+    }
+
+    void FlappyDies()
+    {
+        GameStateManager.GameState = GameState.Dead;
+        DeathGUI.SetActive(true);
+        bird.transform.rotation = new Quaternion(180, 0, 0, 0);
     }
 }
