@@ -10,6 +10,10 @@ public class FlappyScript : MonoBehaviour {
 
     public float XSpeed = 1;
     public float VelocityPreJump = 3;
+    void Start()
+    {
+        IntroGUI.SetActive(true);
+    }
 
 	void Update ()
     {
@@ -94,6 +98,17 @@ public class FlappyScript : MonoBehaviour {
     {
         if (GameStateManager.GameState == GameState.Playing)
         {
+            if (col.gameObject.tag == "pipe")
+                FlappyDies();
+            else if (col.gameObject.tag == "pipeblank")
+                ScoreManagerScript.Score += 1;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (GameStateManager.GameState == GameState.Playing)
+        {
             if (col.gameObject.tag == "ground")
             {
                 FlappyDies();
@@ -105,6 +120,5 @@ public class FlappyScript : MonoBehaviour {
     {
         GameStateManager.GameState = GameState.Dead;
         DeathGUI.SetActive(true);
-        bird.transform.rotation = new Quaternion(180, 0, 0, 0);
     }
 }
