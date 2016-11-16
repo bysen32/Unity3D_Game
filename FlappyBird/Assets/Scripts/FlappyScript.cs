@@ -108,12 +108,8 @@ public class FlappyScript : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
         if (GameStateManager.GameState == GameState.Playing)
-        {
             if (col.gameObject.tag == "ground")
-            {
                 FlappyDies();
-            }
-        }
     }
 
     void FlappyDies()

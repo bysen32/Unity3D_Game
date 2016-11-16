@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System;
 
 public class FloorManagerScript : MonoBehaviour {
 
@@ -48,7 +47,9 @@ public class FloorManagerScript : MonoBehaviour {
         if (GameStateManager.GameState == GameState.Playing)
         {
             GameObject pipe = Instantiate(pipePrefab, transform, false) as GameObject;
-            pipe.transform.position = new Vector3(pipeGenPoint.position.x, 0, 0);
+            float y = Random.Range(-0.5f, 1f);
+            float offx = Random.Range(-0.3f, 0.3f);
+            pipe.transform.position = new Vector3(pipeGenPoint.position.x+offx, y, 0);
             pipeList.Add(pipe);
         }
     }
