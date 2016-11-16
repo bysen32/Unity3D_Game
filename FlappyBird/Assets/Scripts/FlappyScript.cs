@@ -7,12 +7,15 @@ public class FlappyScript : MonoBehaviour {
     public GameObject IntroGUI, DeathGUI;
     public GameObject bird;
     public Collider2D restartButtonGameCollider;
+    public AudioClip FlyAudioClip, DeathAudioClip, ScoreAudioClip;
 
     public float XSpeed = 1;
     public float VelocityPreJump = 3;
     void Start()
     {
         IntroGUI.SetActive(true);
+        ScoreManagerScript.Score = 0;
+        //Screen.SetResolution(180, 320, false);
     }
 
 	void Update ()
@@ -38,6 +41,7 @@ public class FlappyScript : MonoBehaviour {
             if (WasTouchedOrClicked())
             {
                 BoostOnYAxis();
+                GetComponent<AudioSource>().PlayOneShot(FlyAudioClip);
             }
 
         }
@@ -101,7 +105,10 @@ public class FlappyScript : MonoBehaviour {
             if (col.gameObject.tag == "pipe")
                 FlappyDies();
             else if (col.gameObject.tag == "pipeblank")
+            {
                 ScoreManagerScript.Score += 1;
+                GetComponent<AudioSource>().PlayOneShot(ScoreAudioClip);
+            }
         }
     }
 
@@ -116,5 +123,6 @@ public class FlappyScript : MonoBehaviour {
     {
         GameStateManager.GameState = GameState.Dead;
         DeathGUI.SetActive(true);
+        GetComponent<AudioSource>().PlayOneShot(DeathAudioClip);
     }
 }
