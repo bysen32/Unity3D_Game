@@ -12,17 +12,16 @@ public class GameReady : MonoBehaviour {
 	}
 
     private void OnGameStartBtnClick(GameObject btn) {
-        OpenUI("UI/GameScene");
-        Destroy(gameObject);
-    }
-    private void OnGameExitBtnClick(GameObject btn) {
+        GameStatusMessage msg = new GameStatusMessage();
+        msg.Status = GameStatus.GamePlaying;
+        Message.Send<GameStatusMessage>(msg);
         Destroy(gameObject);
     }
 
-    private void OpenUI(string path) {
-        GameObject ui = Instantiate(Resources.Load(path)) as GameObject;
-        ui.transform.parent = GameObject.Find("main").transform;
-        ui.transform.localPosition = Vector3.zero;
-        ui.transform.localScale = Vector3.one;
+    private void OnGameExitBtnClick(GameObject btn) {
+        GameStatusMessage msg = new GameStatusMessage();
+        msg.Status = GameStatus.GameExit;
+        Message.Send<GameStatusMessage>(msg);
+        Destroy(gameObject);
     }
 }
